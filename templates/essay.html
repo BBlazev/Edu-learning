@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='js/style.css') }}" rel="stylesheet">
+    <title>PDF Question Generator</title>
+</head>
+<body>
+    <section id="navbar">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+            <div class="container">
+                <a class="navbar-brand" href="{{ url_for('home') }}">PDF Q&A</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav ml-auto">
+                        {% if 'user_id' in session %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('revision') }}">Revision</a>
+                    </li>
+                    
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                    </li>
+                {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('features') }}">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('pricing') }}">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('learn') }}">Learn</a>
+                    </li>
+                  </ul>
+                </div>
+            </div>
+        </nav>    
+    </section>
+    
+    <div class="container">
+        <h1 class="mt-4">Essay Analysis</h1>
+        <form action="/upload-essay" method="post" enctype="multipart/form-data" class="mt-3" id="essayForm">
+            <div class="form-group">
+                <label for="essayFile">Upload your essay (PDF only)</label>
+                <input type="file" class="form-control-file" id="essayFile" name="essayFile" accept=".pdf" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Analyze Essay</button>
+        </form>
+
+        {% if feedback_list %}
+        <div class="feedback-section">
+            <h2>Feedback</h2>
+            {% for feedback in feedback_list %}
+                <div class="alert alert-info" role="alert">
+                    {{ feedback }}
+                </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    <div id="loadingIndicator" class="hidden">
+        Analyzing your essay, please wait...
+    </div>
+
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Include Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Include your custom JavaScript -->
+    
+    <script>
+        // Your custom JavaScript code here
+        $(document).ready(function() {
+            $('#toggle-essay-btn').click(function() {
+                $('#original-essay').toggle();
+            });
+
+            $('#essayForm').on('submit', function(e) {
+                e.preventDefault();
+
+                // Form Validation
+                var fileInput = $('#essayFile')[0];
+                if (fileInput.files.length === 0) {
+                    alert('Please select a file to upload.');
+                    return;
+                }
+
+                // Show loading indicator
+                $('#loadingIndicator').removeClass('hidden');
+
+                // AJAX Form Submission
+                var formData = new FormData(this);
+                $.ajax({
+                    url: '/upload-essay',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        // Hide loading indicator
+                        $('#loadingIndicator').addClass('hidden');
+
+                        // Display feedback
+                        $('body').html(response);
+                    },
+                    error: function() {
+                        alert('There was an error processing your essay.');
+                        $('#loadingIndicator').addClass('hidden');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

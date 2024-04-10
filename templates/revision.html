@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='js/revision.css') }}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+    <title>Revision Mode</title>
+</head>
+<body>
+    <section id="navbar">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+            <div class="container">
+                <a class="navbar-brand" href="{{ url_for('home') }}">PDF Q&A</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        {% if 'user_id' in session %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('revision') }}">Revision</a>
+                    </li>
+                    
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                    </li>
+                {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('features') }}">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('pricing') }}">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('learn') }}">Learn</a>
+                    </li>
+                  </ul>
+                </div>
+            </div>
+        </nav>
+    </section>
+
+    <h1>Revision Mode</h1>
+    <div class="filter-buttons">
+        <button id="show-all-btn" class="btn btn-secondary">Show All</button>
+        <button id="show-correct-btn" class="btn btn-success">Show Correct</button>
+        <button id="show-incorrect-btn" class="btn btn-danger">Show Incorrect</button>
+    </div>
+    <div class="container my-4">
+
+        {% if user_answers %}
+        <script>
+            var totalQuestions = "{{ total_questions }}";
+        var correctAnswers = "{{ correct_answers }}";
+        var incorrectAnswers = "{{ incorrect_answers }}";
+        </script>
+        <script src="{{ url_for('static', filename='js/statistics.js') }}"></script>
+    
+        <!-- Statistics Chart Canvas -->
+        <div class="container my-4">
+            <canvas id="statisticsChart" width="400" height="200"></canvas>
+        </div>
+            <div class="flashcard-container">
+                {% for user_answer in user_answers %}
+                <div class="flashcard card mb-3 {{ 'correct' if user_answer.is_correct else 'incorrect' }}" data-user-answer-id="{{ user_answer.id }}">
+                    <div class="card-body">
+                            <h5 class="card-title">Question</h5>
+                            <p class="card-text">{{ user_answer.question_content }}</p>
+                            <h5 class="card-title">Your Answer</h5>
+                            <p class="card-text">{{ user_answer.user_answer }}</p>
+                            <p class="status">
+                                {% if user_answer.is_correct %}
+                                    <span class="badge bg-success">Correct</span>
+                                {% else %}
+                                    <span class="badge bg-danger">Incorrect</span>
+
+                                    {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No previous answers found for revision.</p>
+        {% endif %}
+        
+    </div>
+    <a href="{{ url_for('home') }}" class="btn btn-secondary mt-3">Back to Home</a>
+    </div>
+
+    <button id="scrollToTopBtn" class="btn btn-secondary" onclick="topFunction()">Scroll to Top</button>
+    <script src="{{ url_for('static', filename='js/scrollTopDownBtn.js') }}"></script>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    
+</body>
+</html>

@@ -1,0 +1,55 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar styles */
+.navbar {
+    background-color: #007bff; /* Bright blue for the navbar */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Navbar links */
+.navbar .navbar-brand,
+.navbar .nav-link {
+    color: #fff !important; /* White text color for links */
+}
+
+.navbar .nav-link:hover {
+    color: #ffd700 !important; /* Bright yellow on hover */
+}
+
+header {
+    background-color: #3498db;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+h1 {
+    margin: 0;
+}
+
+.feature {
+    background-color: #ffffff;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.feature:hover {
+    transform: scale(1.05); /* Add hover animation to feature sections */
+}
+
+/* Add more styles as needed */
+
+footer {
+    text-align: center;
+    background-color: #3498db;
+    color: white;
+    padding: 10px;
+}

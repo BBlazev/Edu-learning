@@ -1,0 +1,83 @@
+
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        color: #333;
+    }
+
+    .container {
+        width: 80%;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+
+    form {
+        background: #fff;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+    textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-bottom: 20px;
+    }
+
+    input[type="file"] {
+        margin-bottom: 20px;
+    }
+
+    button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-transform: uppercase;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    #loadingMessage {
+        text-align: center;
+        font-size: 18px;
+        color: #007bff;
+    }
+
+    #summaryResult {
+        background: #fff;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        white-space: pre-wrap; /* To preserve spaces and line breaks from the summary response */
+    }
+    .navbar .navbar-brand,
+    .navbar .nav-link {
+        color: #fff !important; /* White text color for links */
+        transition: background-color 0.3s ease-in-out;
+    
+    }
+    
+    .navbar .nav-link:hover {
+        color: #ffd700 !important; /* Bright yellow on hover */
+    }
+    .navbar {
+        background-color: #007bff; /* Bright blue for the navbar */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }

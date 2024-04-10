@@ -1,0 +1,11 @@
+#progressBar {
+    width: 0%;
+    height: 30px;
+    background-color: green;
+    text-align: center;
+    line-height: 30px;
+    color: white;
+}
+#uploadStatus {
+    margin-top: 10px;
+}
